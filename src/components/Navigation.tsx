@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Menu, X, LogIn } from 'lucide-react';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -33,7 +34,7 @@ const Navigation = () => {
           </div>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex items-center space-x-8">
             <button 
               onClick={() => scrollToSection('home')}
               className="text-gray-300 hover:text-green-400 transition-colors duration-200"
@@ -58,6 +59,13 @@ const Navigation = () => {
             >
               Contact
             </button>
+            <Link
+              to="/login"
+              className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200"
+            >
+              <LogIn className="w-4 h-4" />
+              <span>เข้าสู่ระบบ</span>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -99,6 +107,14 @@ const Navigation = () => {
               >
                 Contact
               </button>
+              <Link
+                to="/login"
+                className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <LogIn className="w-4 h-4" />
+                <span>เข้าสู่ระบบ</span>
+              </Link>
             </div>
           </div>
         )}

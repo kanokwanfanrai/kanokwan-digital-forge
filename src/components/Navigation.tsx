@@ -2,10 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, LogIn } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import ProfileDropdown from './ProfileDropdown';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, loading } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,13 +62,20 @@ const Navigation = () => {
             >
               Contact
             </button>
-            <Link
-              to="/login"
-              className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200"
-            >
-              <LogIn className="w-4 h-4" />
-              <span>เข้าสู่ระบบ</span>
-            </Link>
+            
+            {!loading && (
+              user ? (
+                <ProfileDropdown />
+              ) : (
+                <Link
+                  to="/auth"
+                  className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200"
+                >
+                  <LogIn className="w-4 h-4" />
+                  <span>เข้าสู่ระบบ</span>
+                </Link>
+              )
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -107,14 +117,23 @@ const Navigation = () => {
               >
                 Contact
               </button>
-              <Link
-                to="/login"
-                className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <LogIn className="w-4 h-4" />
-                <span>เข้าสู่ระบบ</span>
-              </Link>
+              
+              {!loading && (
+                user ? (
+                  <div className="pt-2">
+                    <ProfileDropdown />
+                  </div>
+                ) : (
+                  <Link
+                    to="/auth"
+                    className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <LogIn className="w-4 h-4" />
+                    <span>เข้าสู่ระบบ</span>
+                  </Link>
+                )
+              )}
             </div>
           </div>
         )}
